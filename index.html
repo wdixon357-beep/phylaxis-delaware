@@ -172,46 +172,46 @@
     <p class="h2note">Choose one or more.</p>
     <fieldset>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Archives &amp; Records">
+        <input type="checkbox" name="Committee[]" value="Archives &amp; Records">
         <span class="name">Archives &amp; Records</span>
         <span class="desc">Collecting, preserving, organizing, and digitizing historical records.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Research &amp; Publications">
+        <input type="checkbox" name="Committee[]" value="Research &amp; Publications">
         <span class="name">Research &amp; Publications</span>
         <span class="desc">Conducting historical research and preparing articles and publications.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Quarterly Digest Editorial">
+        <input type="checkbox" name="Committee[]" value="Quarterly Digest Editorial">
         <span class="name">Quarterly Digest Editorial</span>
         <span class="desc">Gathering reports from all Prince Hall Affiliated bodies in Delaware and
         producing our quarterly Digest.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Genealogy &amp; Family History">
+        <input type="checkbox" name="Committee[]" value="Genealogy &amp; Family History">
         <span class="name">Genealogy &amp; Family History</span>
         <span class="desc">Documenting the histories of prominent Prince Hall families and preserving
         their legacies.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Oral History">
+        <input type="checkbox" name="Committee[]" value="Oral History">
         <span class="name">Oral History</span>
         <span class="desc">Interviewing our senior members to preserve their memories and experiences
         for future generations.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Education &amp; Programs">
+        <input type="checkbox" name="Committee[]" value="Education &amp; Programs">
         <span class="name">Education &amp; Programs</span>
         <span class="desc">Planning educational presentations and identifying qualified speakers.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Membership">
+        <input type="checkbox" name="Committee[]" value="Membership">
         <span class="name">Membership</span>
         <span class="desc">Recruiting new members while welcoming, engaging, and mentoring current
         members.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="Committee" value="Finance &amp; Fundraising">
+        <input type="checkbox" name="Committee[]" value="Finance &amp; Fundraising">
         <span class="name">Finance &amp; Fundraising</span>
         <span class="desc">Identifying funding opportunities and supporting the financial needs of the
         chapter.</span>
@@ -275,7 +275,7 @@
     }
 
     form.addEventListener('submit', function (e) {
-      var picks = document.querySelectorAll('input[name="Committee"]:checked');
+      var picks = document.querySelectorAll('input[name="Committee[]"]:checked');
       var cleanup = document.querySelector('.cleanup input:checked');
       var name = document.getElementById('name').value.trim();
       if (!picks.length && !cleanup) {
