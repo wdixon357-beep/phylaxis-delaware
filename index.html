@@ -108,13 +108,13 @@
     background: var(--ground); border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; }
   input[type="text"]:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 1px; border-color: var(--gold); }
 
-  .actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px 18px; align-items: center; }
-  .btn { font-family: var(--sans); font-weight: 700; letter-spacing: .03em; font-size: 15px;
-    background: var(--gold); color: #101827; border: 1px solid transparent; border-radius: 6px;
-    padding: 14px 26px; cursor: pointer; transition: transform .12s ease, box-shadow .15s ease, background .15s ease; }
+  .actions { margin-top: 26px; }
+  .btn { font-family: var(--sans); font-weight: 700; letter-spacing: .04em; font-size: 17px;
+    width: 100%; background: var(--gold); color: #101827; border: 1px solid transparent; border-radius: 6px;
+    padding: 17px 26px; cursor: pointer; transition: transform .12s ease, box-shadow .15s ease, background .15s ease; }
   .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); background: var(--gold-bright); }
   .btn:focus-visible { outline: 2px solid var(--royal); outline-offset: 2px; }
-  .msg { font-size: 14px; color: var(--ink-soft); font-family: var(--sans); }
+  .msg { display: block; margin-top: 12px; text-align: center; font-size: 14px; color: var(--ink-soft); font-family: var(--sans); }
   .msg.err { color: #B0402F; font-weight: 600; }
   :root[data-theme="dark"] .msg.err { color: #E88C7A; }
 
@@ -159,8 +159,8 @@
   </div>
 
   <p class="lede reveal">Every charter member is asked to serve on at least one standing committee.
-  Read the work of each below, tick the ones you will support, add your name, and send — the Secretary and the President
-  are notified of your choices at once.</p>
+  Read the work of each below, tick the ones you will support, add your name and lodge, and press
+  Submit — the Secretary and the President are notified of your choices at once.</p>
 
   <form id="signup" action="https://formsubmit.co/brodixonsaunders@stonesquare22pha.org" method="POST">
     <input type="hidden" name="_cc" value="apiii@mac.com">
@@ -239,11 +239,9 @@
     </div>
 
     <div class="actions">
-      <button type="submit" class="btn">Submit my sign-up</button>
-      <span class="msg" id="msg" role="status" aria-live="polite"></span>
+      <button type="submit" class="btn">Submit</button>
     </div>
-    <p class="fallback">Prefer email? You can also write the Secretary directly at
-      <a href="mailto:brodixonsaunders@stonesquare22pha.org">brodixonsaunders@stonesquare22pha.org</a>.</p>
+    <span class="msg" id="msg" role="status" aria-live="polite"></span>
   </form>
 
   <footer class="reveal">
