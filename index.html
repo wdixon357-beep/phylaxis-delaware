@@ -159,54 +159,59 @@
   </div>
 
   <p class="lede reveal">Every charter member is asked to serve on at least one standing committee.
-  Read the work of each below, tick the ones you will support, add your name, and send — your choices
-  go straight to the Secretary and the President.</p>
+  Read the work of each below, tick the ones you will support, add your name, and send — the Secretary and the President
+  are notified of your choices at once.</p>
 
-  <form id="signup">
+  <form id="signup" action="https://formsubmit.co/brodixonsaunders@stonesquare22pha.org" method="POST">
+    <input type="hidden" name="_cc" value="apiii@mac.com">
+    <input type="hidden" name="_subject" value="Phylaxis Chapter — Committee Sign-Up">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://wdixon357-beep.github.io/phylaxis-delaware/?submitted=1">
     <h2>Standing Committees</h2>
     <p class="h2note">Choose one or more.</p>
     <fieldset>
       <label class="item">
-        <input type="checkbox" name="committee" value="Archives &amp; Records">
+        <input type="checkbox" name="Committee" value="Archives &amp; Records">
         <span class="name">Archives &amp; Records</span>
         <span class="desc">Collecting, preserving, organizing, and digitizing historical records.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Research &amp; Publications">
+        <input type="checkbox" name="Committee" value="Research &amp; Publications">
         <span class="name">Research &amp; Publications</span>
         <span class="desc">Conducting historical research and preparing articles and publications.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Quarterly Digest Editorial">
+        <input type="checkbox" name="Committee" value="Quarterly Digest Editorial">
         <span class="name">Quarterly Digest Editorial</span>
         <span class="desc">Gathering reports from all Prince Hall Affiliated bodies in Delaware and
         producing our quarterly Digest.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Genealogy &amp; Family History">
+        <input type="checkbox" name="Committee" value="Genealogy &amp; Family History">
         <span class="name">Genealogy &amp; Family History</span>
         <span class="desc">Documenting the histories of prominent Prince Hall families and preserving
         their legacies.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Oral History">
+        <input type="checkbox" name="Committee" value="Oral History">
         <span class="name">Oral History</span>
         <span class="desc">Interviewing our senior members to preserve their memories and experiences
         for future generations.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Education &amp; Programs">
+        <input type="checkbox" name="Committee" value="Education &amp; Programs">
         <span class="name">Education &amp; Programs</span>
         <span class="desc">Planning educational presentations and identifying qualified speakers.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Membership">
+        <input type="checkbox" name="Committee" value="Membership">
         <span class="name">Membership</span>
         <span class="desc">Recruiting new members while welcoming, engaging, and mentoring current
         members.</span>
       </label>
       <label class="item">
-        <input type="checkbox" name="committee" value="Finance &amp; Fundraising">
+        <input type="checkbox" name="Committee" value="Finance &amp; Fundraising">
         <span class="name">Finance &amp; Fundraising</span>
         <span class="desc">Identifying funding opportunities and supporting the financial needs of the
         chapter.</span>
@@ -218,7 +223,7 @@
     artifacts before they are lost to age, with the permission of MW Grand Master Vandrick Hamlin, Jr.</p>
     <fieldset>
       <label class="item cleanup">
-        <input type="checkbox" name="cleanup" value="yes">
+        <input type="checkbox" name="Restoration Day July 29" value="Yes, I will attend">
         <span class="name">Count me in for Grand East Restoration Day</span>
         <span class="when">Wednesday, July 29, 2026 · 11:00 AM · Grand East, Dover · reply by July 27</span>
       </label>
@@ -226,18 +231,18 @@
 
     <div class="who">
       <label class="field">Your name
-        <input type="text" id="name" autocomplete="name" placeholder="Bro. …">
+        <input type="text" id="name" name="Name" autocomplete="name" placeholder="Bro. …">
       </label>
       <label class="field">Your lodge
-        <input type="text" id="lodge" autocomplete="off" placeholder="Lodge &amp; No.">
+        <input type="text" id="lodge" name="Lodge" autocomplete="off" placeholder="Lodge &amp; No.">
       </label>
     </div>
 
     <div class="actions">
-      <button type="submit" class="btn">Send my sign-up to the Secretary</button>
+      <button type="submit" class="btn">Submit my sign-up</button>
       <span class="msg" id="msg" role="status" aria-live="polite"></span>
     </div>
-    <p class="fallback">No email app? Write to the Secretary directly at
+    <p class="fallback">Prefer email? You can also write the Secretary directly at
       <a href="mailto:brodixonsaunders@stonesquare22pha.org">brodixonsaunders@stonesquare22pha.org</a>.</p>
   </form>
 
@@ -259,45 +264,36 @@
   (function () {
     var form = document.getElementById('signup');
     var msg = document.getElementById('msg');
-    var SECRETARY = 'brodixonsaunders@stonesquare22pha.org';
-    var PRESIDENT = 'apiii@mac.com';
+
+    // success banner after FormSubmit redirects back
+    if (window.location.search.indexOf('submitted=1') !== -1) {
+      var banner = document.createElement('div');
+      banner.className = 'banner';
+      banner.style.borderLeftColor = 'var(--good)';
+      banner.innerHTML = '<b style="color:var(--good)">Received</b>' +
+        '<span>Thank you, Brother — your sign-up has been recorded and the Secretary and President have been notified.</span>';
+      form.parentNode.insertBefore(banner, form);
+      banner.scrollIntoView({ block: 'center' });
+    }
 
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var picks = Array.prototype.slice
-        .call(document.querySelectorAll('input[name="committee"]:checked'))
-        .map(function (c) { return c.value.replace(/&amp;/g, '&'); });
-      var cleanup = document.querySelector('input[name="cleanup"]:checked');
+      var picks = document.querySelectorAll('input[name="Committee"]:checked');
+      var cleanup = document.querySelector('.cleanup input:checked');
       var name = document.getElementById('name').value.trim();
-      var lodge = document.getElementById('lodge').value.trim();
-
       if (!picks.length && !cleanup) {
-        setErr('Please tick at least one committee (or the clean-up).');
+        e.preventDefault();
+        msg.className = 'msg err';
+        msg.textContent = 'Please tick at least one committee (or Restoration Day).';
         return;
       }
-      if (!name) { setErr('Please add your name so the Secretary can record it.'); return; }
-
-      var nl = '\r\n';
-      var body = 'Brother Secretary,' + nl + nl;
-      if (picks.length) {
-        body += 'I volunteer for the following committee' + (picks.length > 1 ? 's' : '') + ':' + nl;
-        picks.forEach(function (p) { body += '  • ' + p + nl; });
-        body += nl;
+      if (!name) {
+        e.preventDefault();
+        msg.className = 'msg err';
+        msg.textContent = 'Please add your name so it can be recorded.';
+        return;
       }
-      if (cleanup) { body += 'I am available for Grand East Restoration Day on July 29, 2026.' + nl + nl; }
-      body += 'Name: ' + name + nl + 'Lodge: ' + (lodge || '') + nl + nl + 'Fraternally,' + nl + name + nl;
-
-      var subject = 'Committee Sign-Up — ' + name;
-      var href = 'mailto:' + SECRETARY +
-        '?cc=' + PRESIDENT +
-        '&subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
-
       msg.className = 'msg';
-      msg.textContent = 'Opening your email app…';
-      window.location.href = href;
+      msg.textContent = 'Submitting…';
     });
-
-    function setErr(t) { msg.className = 'msg err'; msg.textContent = t; }
   })();
 </script>
