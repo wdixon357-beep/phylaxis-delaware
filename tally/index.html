@@ -1,0 +1,203 @@
+<title>Phylaxis Society DE — Committee Tally Board</title>
+<style>
+  :root {
+    --ground: #F4EFE4;
+    --ground-raise: #FBF8F1;
+    --ink: #1A2438;
+    --ink-soft: #545B6E;
+    --gold: #9A7B29;
+    --gold-bright: #C9A24B;
+    --royal: #22436B;
+    --line: rgba(26, 36, 56, 0.16);
+    --line-soft: rgba(26, 36, 56, 0.08);
+    --good: #2E6B4F;
+    --wait: #8A6D1F;
+    --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+    --sans: "Helvetica Neue", Arial, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #101827; --ground-raise: #17223A; --ink: #ECE3CD; --ink-soft: #A7AEC0;
+      --gold: #CBA24E; --gold-bright: #E3C273; --royal: #9EB7D8;
+      --line: rgba(236,227,205,.17); --line-soft: rgba(236,227,205,.08);
+      --good: #6FBF97; --wait: #D9B45C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F4EFE4; --ground-raise: #FBF8F1; --ink: #1A2438; --ink-soft: #545B6E;
+    --gold: #9A7B29; --gold-bright: #C9A24B; --royal: #22436B;
+    --line: rgba(26,36,56,.16); --line-soft: rgba(26,36,56,.08); --good: #2E6B4F; --wait: #8A6D1F;
+    --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
+  }
+  :root[data-theme="dark"] {
+    --ground: #101827; --ground-raise: #17223A; --ink: #ECE3CD; --ink-soft: #A7AEC0;
+    --gold: #CBA24E; --gold-bright: #E3C273; --royal: #9EB7D8;
+    --line: rgba(236,227,205,.17); --line-soft: rgba(236,227,205,.08);
+    --good: #6FBF97; --wait: #D9B45C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--serif);
+    line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: clamp(26px, 5vw, 56px) clamp(20px, 5vw, 40px) 72px; }
+
+  header { text-align: center; }
+  header svg { width: 54px; height: 54px; display: block; margin: 0 auto 14px; }
+  .rule { display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .rule::before, .rule::after { content: ""; height: 1px; width: min(90px, 22vw); background: var(--line); }
+  .rule span { font-family: var(--sans); text-transform: uppercase; letter-spacing: .28em;
+    font-size: 10px; color: var(--ink-soft); }
+  h1 { font-size: clamp(24px, 4.6vw, 34px); line-height: 1.15; text-wrap: balance; margin: 16px 0 4px;
+    font-weight: 600; }
+  .chapter { font-size: clamp(14px, 2.2vw, 17px); color: var(--ink-soft); margin: 0; font-style: italic; }
+  .stamp { display: inline-block; margin-top: 18px; font-family: var(--sans); font-size: 11px;
+    font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; background: var(--ground-raise); }
+
+  /* summary strip */
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 30px 0 8px; }
+  @media (max-width: 560px) { .summary { grid-template-columns: 1fr; } }
+  .stat { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
+    box-shadow: var(--shadow); padding: 16px 18px; }
+  .stat b { display: block; font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat span { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); }
+
+  h2 { font-size: 13px; font-family: var(--sans); text-transform: uppercase; letter-spacing: .16em;
+    font-weight: 700; color: var(--ink-soft); margin: 40px 0 16px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line); }
+
+  /* committee board */
+  .board { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .board { grid-template-columns: 1fr; } }
+  .comm { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
+    box-shadow: var(--shadow); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+  .comm .head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .comm .name { font-size: 17px; font-weight: 600; }
+  .count { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+    border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+  .count.zero { color: var(--wait); border: 1px solid currentColor; }
+  .count.some { color: var(--good); border: 1px solid currentColor; }
+  .comm ul { margin: 0; padding: 0; list-style: none; }
+  .comm li { padding: 6px 0; border-top: 1px dashed var(--line-soft); font-size: 15.5px; }
+  .comm li:first-child { border-top: 0; }
+  .comm .empty { color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
+
+  /* roster table */
+  .roster { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
+    box-shadow: var(--shadow); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 520px; }
+  th { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 12px 16px;
+    border-bottom: 1px solid var(--line); }
+  td { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); font-size: 15px; }
+  tr:last-child td { border-bottom: 0; }
+  .pill { font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: .05em;
+    border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+  .pill.in { color: var(--good); border: 1px solid currentColor; }
+  .pill.pending { color: var(--wait); border: 1px solid currentColor; }
+
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 13.5px; color: var(--ink-soft); }
+  footer a { color: var(--gold); }
+</style>
+
+<div class="wrap">
+  <header>
+    <svg viewBox="0 0 100 100" fill="none" stroke="var(--gold)" stroke-width="2.4"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="var(--line)" stroke-width="1.5"/>
+      <path d="M28 54 L50 74 L72 54"/>
+      <path d="M50 24 L34 66" />
+      <path d="M50 24 L66 66" />
+      <circle cx="50" cy="24" r="3.4" fill="var(--gold)" stroke="none"/>
+      <circle cx="50" cy="50" r="3.2" stroke-width="1.6"/>
+    </svg>
+    <div class="rule"><span>The Phylaxis Society</span></div>
+    <h1>Committee Tally Board</h1>
+    <p class="chapter">John T. Luke, Grand Lecturer Emeritus Delaware Chapter, P.H.A.</p>
+    <div class="stamp">Updated July 23, 2026 — maintained by the Secretary</div>
+  </header>
+
+  <div class="summary">
+    <div class="stat"><b>0 of 12</b><span>Charter members responded</span></div>
+    <div class="stat"><b>0 of 8</b><span>Committees with volunteers</span></div>
+    <div class="stat"><b>Aug 31</b><span>Sign-up deadline</span></div>
+  </div>
+
+  <h2>Standing Committees</h2>
+  <div class="board">
+    <div class="comm">
+      <div class="head"><span class="name">Archives &amp; Records</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Research &amp; Publications</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Quarterly Digest Editorial</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Genealogy &amp; Family History</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Oral History</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Education &amp; Programs</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Membership</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+    <div class="comm">
+      <div class="head"><span class="name">Finance &amp; Fundraising</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers</li></ul>
+    </div>
+  </div>
+
+  <h2>Grand East Clean-Up — July 31, 11:00 AM</h2>
+  <div class="board">
+    <div class="comm" style="grid-column: 1 / -1;">
+      <div class="head"><span class="name">Clean-up &amp; documentation crew</span><span class="count zero">0 signed up</span></div>
+      <ul><li class="empty">Awaiting volunteers — availability due Monday, July 27, 4:00 PM</li></ul>
+    </div>
+  </div>
+
+  <h2>Charter Member Roll — Response Status</h2>
+  <div class="roster">
+    <table>
+      <thead>
+        <tr><th>Charter Member</th><th>Status</th><th>Committees</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hon. Everett Lewis Jr., PGM</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>Ill. Sir James Scott Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>RW Maurice D. Mobley Sr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>RW Dr. Johnie A. Burton Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>RW Dwight F. Harmon Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>PM John A. Henderson</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>PM Lloyd Staats Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>PM Harold Mack</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>Alexander Peterson III (President)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>W. Aaron Dixon-Saunders (Secretary)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>Kenneth L. Swain (Vice President)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+        <tr><td>Dr. Moody A. Amakobe (Historian)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Volunteers sign up at the chapter's committee page; each response is emailed to the Secretary and
+    the President, and this board is updated from those responses. Questions — write the Secretary at
+    <a href="mailto:brodixonsaunders@stonesquare22pha.org">brodixonsaunders@stonesquare22pha.org</a>.
+  </footer>
+</div>
