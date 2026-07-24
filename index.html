@@ -257,36 +257,53 @@
   (function () {
     var form = document.getElementById('signup');
     var msg = document.getElementById('msg');
+    var btn = form.querySelector('.btn');
 
-    // success banner after FormSubmit redirects back
-    if (window.location.search.indexOf('submitted=1') !== -1) {
+    function showReceived() {
       var banner = document.createElement('div');
       banner.className = 'banner';
       banner.style.borderLeftColor = 'var(--good)';
       banner.innerHTML = '<b style="color:var(--good)">Received</b>' +
         '<span>Thank you, Brother — your sign-up has been recorded and the Secretary and President have been notified.</span>';
       form.parentNode.insertBefore(banner, form);
+      form.style.display = 'none';
       banner.scrollIntoView({ block: 'center' });
     }
 
+    // legacy: arriving back with ?submitted=1 still shows the banner
+    if (window.location.search.indexOf('submitted=1') !== -1) { showReceived(); }
+
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
       var picks = document.querySelectorAll('input[name="Committee[]"]:checked');
       var cleanup = document.querySelector('.cleanup input:checked');
       var name = document.getElementById('name').value.trim();
       if (!picks.length && !cleanup) {
-        e.preventDefault();
         msg.className = 'msg err';
         msg.textContent = 'Please tick at least one committee (or Restoration Day).';
         return;
       }
       if (!name) {
-        e.preventDefault();
         msg.className = 'msg err';
         msg.textContent = 'Please add your name so it can be recorded.';
         return;
       }
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
       msg.className = 'msg';
-      msg.textContent = 'Submitting…';
+      msg.textContent = '';
+      var params = new URLSearchParams();
+      new FormData(form).forEach(function (v, k) { params.append(k, v); });
+      fetch(form.action, { method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString() })
+        .then(showReceived)
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Submit';
+          msg.className = 'msg err';
+          msg.textContent = 'Something went wrong — please try again, or email the Secretary.';
+        });
     });
   })();
 </script>
