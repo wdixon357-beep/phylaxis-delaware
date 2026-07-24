@@ -1,17 +1,10 @@
 <title>Phylaxis Society DE — Committee Tally Board</title>
 <style>
   :root {
-    --ground: #F4EFE4;
-    --ground-raise: #FBF8F1;
-    --ink: #1A2438;
-    --ink-soft: #545B6E;
-    --gold: #9A7B29;
-    --gold-bright: #C9A24B;
-    --royal: #22436B;
-    --line: rgba(26, 36, 56, 0.16);
-    --line-soft: rgba(26, 36, 56, 0.08);
-    --good: #2E6B4F;
-    --wait: #8A6D1F;
+    --ground: #F4EFE4; --ground-raise: #FBF8F1; --ink: #1A2438; --ink-soft: #545B6E;
+    --gold: #9A7B29; --gold-bright: #C9A24B; --royal: #22436B;
+    --line: rgba(26, 36, 56, 0.16); --line-soft: rgba(26, 36, 56, 0.08);
+    --good: #2E6B4F; --wait: #8A6D1F;
     --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
     --sans: "Helvetica Neue", Arial, system-ui, sans-serif;
@@ -24,19 +17,6 @@
       --good: #6FBF97; --wait: #D9B45C;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
     }
-  }
-  :root[data-theme="light"] {
-    --ground: #F4EFE4; --ground-raise: #FBF8F1; --ink: #1A2438; --ink-soft: #545B6E;
-    --gold: #9A7B29; --gold-bright: #C9A24B; --royal: #22436B;
-    --line: rgba(26,36,56,.16); --line-soft: rgba(26,36,56,.08); --good: #2E6B4F; --wait: #8A6D1F;
-    --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
-  }
-  :root[data-theme="dark"] {
-    --ground: #101827; --ground-raise: #17223A; --ink: #ECE3CD; --ink-soft: #A7AEC0;
-    --gold: #CBA24E; --gold-bright: #E3C273; --royal: #9EB7D8;
-    --line: rgba(236,227,205,.17); --line-soft: rgba(236,227,205,.08);
-    --good: #6FBF97; --wait: #D9B45C;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
   }
 
   * { box-sizing: border-box; }
@@ -56,8 +36,9 @@
   .stamp { display: inline-block; margin-top: 18px; font-family: var(--sans); font-size: 11px;
     font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold);
     border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; background: var(--ground-raise); }
+  .stamp .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--good); margin-right: 7px; }
 
-  /* summary strip */
   .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 30px 0 8px; }
   @media (max-width: 560px) { .summary { grid-template-columns: 1fr; } }
   .stat { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
@@ -70,7 +51,6 @@
     font-weight: 700; color: var(--ink-soft); margin: 40px 0 16px; padding-bottom: 10px;
     border-bottom: 1px solid var(--line); }
 
-  /* committee board */
   .board { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 640px) { .board { grid-template-columns: 1fr; } }
   .comm { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
@@ -86,7 +66,6 @@
   .comm li:first-child { border-top: 0; }
   .comm .empty { color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
 
-  /* roster table */
   .roster { border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
     box-shadow: var(--shadow); overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; min-width: 520px; }
@@ -99,6 +78,10 @@
     border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
   .pill.in { color: var(--good); border: 1px solid currentColor; }
   .pill.pending { color: var(--wait); border: 1px solid currentColor; }
+
+  .loading, .loaderr { text-align: center; font-family: var(--sans); color: var(--ink-soft);
+    padding: 40px 0 10px; font-size: 14px; }
+  .loaderr { color: #B0402F; }
 
   footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
     font-size: 13.5px; color: var(--ink-soft); }
@@ -119,84 +102,137 @@
     <div class="rule"><span>The Phylaxis Society</span></div>
     <h1>Committee Tally Board</h1>
     <p class="chapter">John T. Luke, Grand Lecturer Emeritus Delaware Chapter, P.H.A.</p>
-    <div class="stamp">Updated July 23, 2026, 10:05 PM — maintained by the Secretary</div>
+    <div class="stamp"><span class="dot"></span>Live — updates automatically with each sign-up</div>
   </header>
 
-  <div class="summary">
-    <div class="stat"><b>1 of 12</b><span>Charter members responded</span></div>
-    <div class="stat"><b>2 of 8</b><span>Committees with volunteers</span></div>
-    <div class="stat"><b>Aug 31</b><span>Sign-up deadline</span></div>
-  </div>
-
-  <h2>Standing Committees</h2>
-  <div class="board">
-    <div class="comm">
-      <div class="head"><span class="name">Archives &amp; Records</span><span class="count some">1 signed up</span></div>
-      <ul><li>W. Aaron Dixon-Saunders — Stone Square No. 22 (Secretary)</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Research &amp; Publications</span><span class="count some">1 signed up</span></div>
-      <ul><li>W. Aaron Dixon-Saunders — Stone Square No. 22 (Secretary)</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Quarterly Digest Editorial</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Genealogy &amp; Family History</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Oral History</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Education &amp; Programs</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Membership</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-    <div class="comm">
-      <div class="head"><span class="name">Finance &amp; Fundraising</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers</li></ul>
-    </div>
-  </div>
-
-  <h2>Grand East Restoration Day — Wednesday, July 29, 11:00 AM</h2>
-  <div class="board">
-    <div class="comm" style="grid-column: 1 / -1;">
-      <div class="head"><span class="name">Restoration &amp; documentation crew</span><span class="count zero">0 signed up</span></div>
-      <ul><li class="empty">Awaiting volunteers — availability due Monday, July 27, 4:00 PM</li></ul>
-    </div>
-  </div>
-
-  <h2>Charter Member Roll — Response Status</h2>
-  <div class="roster">
-    <table>
-      <thead>
-        <tr><th>Charter Member</th><th>Status</th><th>Committees</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Hon. Everett Lewis Jr., PGM</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>Ill. Sir James Scott Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>RW Maurice D. Mobley Sr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>RW Dr. Johnie A. Burton Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>RW Dwight F. Harmon Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>PM John A. Henderson</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>PM Lloyd Staats Jr.</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>PM Harold Mack</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>Alexander Peterson III (President)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>W. Aaron Dixon-Saunders (Secretary)</td><td><span class="pill in">Responded</span></td><td>Archives &amp; Records · Research &amp; Publications</td></tr>
-        <tr><td>Kenneth L. Swain (Vice President)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-        <tr><td>Dr. Moody A. Amakobe (Historian)</td><td><span class="pill pending">Pending</span></td><td>—</td></tr>
-      </tbody>
-    </table>
+  <div id="content">
+    <p class="loading">Loading current sign-ups…</p>
   </div>
 
   <footer>
-    Volunteers sign up at the chapter's committee page; each sign-up notifies the Secretary and the President automatically, and this board is updated from those sign-ups. Questions — write the Secretary at
+    Brothers sign up at the <a href="https://wdixon357-beep.github.io/phylaxis-delaware/">chapter
+    committee page</a>; each sign-up notifies the Secretary and the President and appears here
+    immediately. Questions — write the Secretary at
     <a href="mailto:brodixonsaunders@stonesquare22pha.org">brodixonsaunders@stonesquare22pha.org</a>.
   </footer>
 </div>
+
+<script>
+(function () {
+  var DATA_URL = 'https://script.google.com/macros/s/AKfycbymjxXd_-9yV9oEYtvrSfVsLMUh6WSqVOl4NVIdDLlHwHgciH20piJbOdNs2nwg3qWJlw/exec';
+
+  var COMMITTEES = [
+    'Archives & Records', 'Research & Publications', 'Quarterly Digest Editorial',
+    'Genealogy & Family History', 'Oral History', 'Education & Programs',
+    'Membership', 'Finance & Fundraising'
+  ];
+
+  var ROSTER = [
+    { display: 'Hon. Everett Lewis Jr., PGM', key: 'lewis' },
+    { display: 'Ill. Sir James Scott Jr.', key: 'scott' },
+    { display: 'RW Maurice D. Mobley Sr.', key: 'mobley' },
+    { display: 'RW Dr. Johnie A. Burton Jr.', key: 'burton' },
+    { display: 'RW Dwight F. Harmon Jr.', key: 'harmon' },
+    { display: 'PM John A. Henderson', key: 'henderson' },
+    { display: 'PM Lloyd Staats Jr.', key: 'staats' },
+    { display: 'PM Harold Mack', key: 'mack' },
+    { display: 'Alexander Peterson III (President)', key: 'peterson' },
+    { display: 'W. Aaron Dixon-Saunders (Secretary)', key: 'dixon' },
+    { display: 'Kenneth L. Swain (Vice President)', key: 'swain' },
+    { display: 'Dr. Moody A. Amakobe (Historian)', key: 'amakobe' }
+  ];
+
+  function esc(t) {
+    var d = document.createElement('div'); d.textContent = t == null ? '' : String(t);
+    return d.innerHTML;
+  }
+  function isTest(e) {
+    var n = (e.name || '').toLowerCase();
+    return n.indexOf('test') !== -1 || n.indexOf('disregard') !== -1;
+  }
+
+  function render(entries) {
+    entries = entries.filter(function (e) { return e.name && !isTest(e); });
+
+    // keep the latest entry per name (a brother can resubmit to update his picks)
+    var byName = {};
+    entries.forEach(function (e) { byName[(e.name || '').toLowerCase().replace(/\s+/g, ' ').trim()] = e; });
+    var list = Object.keys(byName).map(function (k) { return byName[k]; });
+
+    var respondedKeys = {};
+    list.forEach(function (e) {
+      var n = (e.name || '').toLowerCase();
+      ROSTER.forEach(function (m) { if (n.indexOf(m.key) !== -1) { respondedKeys[m.key] = e; } });
+    });
+
+    var withVols = COMMITTEES.filter(function (c) {
+      return list.some(function (e) { return (e.committees || []).indexOf(c) !== -1; });
+    }).length;
+
+    var html = '';
+    html += '<div class="summary">' +
+      '<div class="stat"><b>' + Object.keys(respondedKeys).length + ' of 12</b><span>Charter members responded</span></div>' +
+      '<div class="stat"><b>' + withVols + ' of 8</b><span>Committees with volunteers</span></div>' +
+      '<div class="stat"><b>Aug 31</b><span>Sign-up deadline</span></div></div>';
+
+    html += '<h2>Standing Committees</h2><div class="board">';
+    COMMITTEES.forEach(function (c) {
+      var vols = list.filter(function (e) { return (e.committees || []).indexOf(c) !== -1; });
+      html += '<div class="comm"><div class="head"><span class="name">' + esc(c) + '</span>' +
+        '<span class="count ' + (vols.length ? 'some' : 'zero') + '">' + vols.length + ' signed up</span></div><ul>';
+      if (!vols.length) html += '<li class="empty">Awaiting volunteers</li>';
+      else vols.forEach(function (e) {
+        html += '<li>' + esc(e.name) + (e.lodge ? ' — ' + esc(e.lodge) : '') + '</li>';
+      });
+      html += '</ul></div>';
+    });
+    html += '</div>';
+
+    var crew = list.filter(function (e) { return e.restoration; });
+    html += '<h2>Grand East Restoration Day — Wednesday, July 29, 11:00 AM</h2><div class="board">' +
+      '<div class="comm" style="grid-column: 1 / -1;"><div class="head">' +
+      '<span class="name">Restoration &amp; documentation crew</span>' +
+      '<span class="count ' + (crew.length ? 'some' : 'zero') + '">' + crew.length + ' signed up</span></div><ul>';
+    if (!crew.length) html += '<li class="empty">Awaiting volunteers — availability due Monday, July 27, 4:00 PM</li>';
+    else crew.forEach(function (e) {
+      html += '<li>' + esc(e.name) + (e.lodge ? ' — ' + esc(e.lodge) : '') + '</li>';
+    });
+    html += '</ul></div></div>';
+
+    html += '<h2>Charter Member Roll — Response Status</h2><div class="roster"><table>' +
+      '<thead><tr><th>Charter Member</th><th>Status</th><th>Committees</th></tr></thead><tbody>';
+    ROSTER.forEach(function (m) {
+      var e = respondedKeys[m.key];
+      html += '<tr><td>' + esc(m.display) + '</td><td><span class="pill ' + (e ? 'in' : 'pending') + '">' +
+        (e ? 'Responded' : 'Pending') + '</span></td><td>' +
+        (e ? (esc((e.committees || []).join(' · ')) || '—') : '—') + '</td></tr>';
+    });
+    html += '</tbody></table></div>';
+
+    var guests = list.filter(function (e) {
+      var n = (e.name || '').toLowerCase();
+      return !ROSTER.some(function (m) { return n.indexOf(m.key) !== -1; });
+    });
+    if (guests.length) {
+      html += '<h2>Additional Brethren Signed Up</h2><div class="roster"><table>' +
+        '<thead><tr><th>Brother</th><th>Lodge</th><th>Committees</th></tr></thead><tbody>';
+      guests.forEach(function (e) {
+        html += '<tr><td>' + esc(e.name) + '</td><td>' + esc(e.lodge || '—') + '</td><td>' +
+          esc((e.committees || []).join(' · ')) + '</td></tr>';
+      });
+      html += '</tbody></table></div>';
+    }
+
+    document.getElementById('content').innerHTML = html;
+  }
+
+  fetch(DATA_URL)
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(render)
+    .catch(function (err) {
+      document.getElementById('content').innerHTML =
+        '<p class="loaderr">Could not load the live tally (' + esc(err.message) +
+        '). Refresh the page to try again.</p>';
+    });
+})();
+</script>
