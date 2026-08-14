@@ -380,6 +380,19 @@
   form.setAttribute('novalidate', 'novalidate');
   form.setAttribute('target', 'applyframe');
 
+  // Safety net: content must never stay invisible because an entrance animation
+  // did not run or was throttled. After a beat, force any still-hidden block visible.
+  setTimeout(function () {
+    var r = document.querySelectorAll('.reveal');
+    for (var i = 0; i < r.length; i++) {
+      if (parseFloat(getComputedStyle(r[i]).opacity) < 0.99) {
+        r[i].style.animation = 'none';
+        r[i].style.opacity = '1';
+        r[i].style.transform = 'none';
+      }
+    }
+  }, 1500);
+
   var d = new Date();
   document.getElementById('f-date').value = d.toLocaleDateString('en-US',
     { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
