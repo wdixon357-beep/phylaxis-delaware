@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Phylaxis Society — Delaware Chapter Membership Application</title>
+<title>Membership Application · Phylaxis Society, Delaware Chapter</title>
 <style>
   :root {
     --ground: #F4EFE4;
@@ -132,6 +132,10 @@
   footer a { color: var(--gold); }
 
   .reveal { opacity: 0; transform: translateY(10px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; animation: none; }
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
   .reveal:nth-child(2){animation-delay:.06s}.reveal:nth-child(3){animation-delay:.12s}
   @keyframes rise { to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
@@ -177,8 +181,15 @@
   </header>
 
   <p class="lede reveal">Preserving our history &middot; Educating our brethren &middot; Advancing our legacy.
-  Complete the application below and press Submit &mdash; the Secretary and the President are notified at once.
+  Complete the application below and press Submit Application. The Secretary and the President are notified at once.
   Applications are presented to the Chapter for a vote at the next stated meeting. Every field is required except Masonic title or rank.</p>
+
+  <noscript>
+    <div class="banner" style="border-left-color:var(--gold)">
+      <b>Note</b><span>JavaScript is turned off in your browser. The form below will still submit,
+      but you will not see a confirmation on screen. Your confirmation will arrive by email.</span>
+    </div>
+  </noscript>
 
   <form id="apply" action="https://script.google.com/macros/s/AKfycbwCjdqu1pE_En5hMwNICNTSXYvxLjPPs5KmCBiRCPfBdH9W_DkYcRteQvcVn146d7Oy/exec" method="POST">
 
@@ -186,7 +197,7 @@
     <fieldset>
       <div class="who2">
         <label class="field"><span>Full name <b class="req">*</b></span>
-          <input type="text" id="name" name="Name" data-req="your full name" autocomplete="name" placeholder="Bro. …">
+          <input type="text" id="name" name="Name" data-req="your full name" required autocomplete="name" placeholder="Bro. …">
         </label>
         <label class="field"><span>Masonic title or rank
             <span class="hint">Optional. Leave blank if none.</span></span>
@@ -199,35 +210,35 @@
           <span class="hint">List every body you belong to, with numbers where you know them. Your Blue
           Lodge, and any Chapter, Council, Commandery, Consistory, Shrine, or other affiliation.</span>
         </span>
-        <textarea id="lodge" name="Affiliations" data-req="your Masonic affiliations" rows="4"
+        <textarea id="lodge" name="Affiliations" data-req="your Masonic affiliations" required rows="4"
           placeholder="Stone Square Lodge No. 22, Middletown&#10;Corinthian Consistory No. 5, Valley of Wilmington&#10;Hannibal Commandery No. 18"></textarea>
       </label>
 
       <div class="who2">
         <label class="field"><span>Current Masonic office <b class="req">*</b></span>
-          <input type="text" name="Office" data-req="your current Masonic office" placeholder="Your office, or None">
+          <input type="text" name="Office" data-req="your current Masonic office" required placeholder="Your office, or None">
         </label>
         <label class="field"><span>Telephone <b class="req">*</b></span>
-          <input type="tel" name="Phone" data-req="your telephone number" autocomplete="tel" placeholder="(302) 555-0123">
+          <input type="tel" name="Phone" data-req="your telephone number" required autocomplete="tel" placeholder="(302) 555-0123">
         </label>
       </div>
 
       <label class="field" style="margin-bottom:20px"><span>Email <b class="req">*</b></span>
-        <input type="email" id="email" name="Email" data-req="your email address" autocomplete="email" placeholder="you@example.com">
+        <input type="email" id="email" name="Email" data-req="your email address" required autocomplete="email" placeholder="you@example.com">
       </label>
 
       <label class="field" style="margin-bottom:20px"><span>Mailing address <b class="req">*</b></span>
-        <input type="text" name="Address" data-req="your mailing address" autocomplete="street-address" placeholder="Street">
+        <input type="text" name="Address" data-req="your mailing address" required autocomplete="street-address" placeholder="Street">
       </label>
       <div class="who3">
         <label class="field"><span>City <b class="req">*</b></span>
-          <input type="text" name="City" data-req="your city" autocomplete="address-level2">
+          <input type="text" name="City" data-req="your city" required autocomplete="address-level2">
         </label>
         <label class="field"><span>State <b class="req">*</b></span>
-          <input type="text" name="State" data-req="your state" autocomplete="address-level1" value="DE">
+          <input type="text" name="State" data-req="your state" required autocomplete="address-level1" value="DE">
         </label>
         <label class="field"><span>ZIP <b class="req">*</b></span>
-          <input type="text" name="ZIP" data-req="your ZIP code" autocomplete="postal-code" inputmode="numeric">
+          <input type="text" name="ZIP" data-req="your ZIP code" required autocomplete="postal-code" inputmode="numeric">
         </label>
       </div>
     </fieldset>
@@ -244,7 +255,7 @@
     <fieldset>
       <label class="item"><input type="checkbox" name="Interest[]" value="Masonic History &amp; Research">
         <span class="name">Masonic History &amp; Research</span>
-        <span class="desc">Researching Delaware's founders, Grand Masters, veterans, and pioneering families.</span></label>
+        <span class="desc">Researching Delaware&rsquo;s founders, Grand Masters, veterans, and pioneering families.</span></label>
       <label class="item"><input type="checkbox" name="Interest[]" value="Archives &amp; Records">
         <span class="name">Archives &amp; Records</span>
         <span class="desc">Collecting, preserving, organizing, and digitizing historical records.</span></label>
@@ -265,13 +276,13 @@
         <span class="desc">Photographing occasions, brethren, and records for the Digest and the archive.</span></label>
       <label class="item"><input type="checkbox" name="Interest[]" value="Community Outreach">
         <span class="name">Community Outreach</span>
-        <span class="desc">Carrying the chapter's work into the towns our lodges sit in.</span></label>
+        <span class="desc">Carrying the chapter&rsquo;s work into the towns our lodges sit in.</span></label>
       <label class="item"><input type="checkbox" name="Interest[]" value="Fundraising">
         <span class="name">Fundraising</span>
         <span class="desc">Identifying funding opportunities and supporting the needs of the chapter.</span></label>
       <label class="item"><input type="checkbox" name="Interest[]" value="Technology &amp; Digital Archives">
         <span class="name">Technology &amp; Digital Archives</span>
-        <span class="desc">Building and maintaining the chapter's digital archive and systems.</span></label>
+        <span class="desc">Building and maintaining the chapter&rsquo;s digital archive and systems.</span></label>
       <label class="field" style="margin-top:14px"><span>Other</span>
         <input type="text" name="Other" placeholder="Anything not listed above">
       </label>
@@ -284,14 +295,14 @@
     to participate in its activities to the best of my ability.</p>
     <fieldset>
       <label class="item cert-box">
-        <input type="checkbox" id="agree" name="Certification" value="Agreed">
+        <input type="checkbox" id="agree" name="Certification" value="Agreed" required>
         <span class="name">I agree, and I submit this application <span class="req">*</span></span>
         <span class="desc">Tick the box, then sign your name below.</span>
       </label>
       <div class="who2" style="margin-top:16px;margin-bottom:0">
         <label class="field sig"><span>Signature <b class="req">*</b>
             <span class="hint">Type your full name. This serves as your signature.</span></span>
-          <input type="text" id="signature" name="Signature" data-req="your signature" placeholder="Your full name">
+          <input type="text" id="signature" name="Signature" data-req="your signature" required placeholder="Your full name">
         </label>
         <label class="field"><span>Date
             <span class="hint">Filled in automatically.</span></span>
@@ -309,12 +320,12 @@
   <footer class="reveal">
     <div class="eyebrow">Chapter Officers</div>
     <div class="off">
-      <div><b>President</b> &mdash; Alexander Peterson III</div>
-      <div><b>Vice President</b> &mdash; Kenneth Swain</div>
-      <div><b>Secretary</b> &mdash; W. Aaron Dixon-Saunders</div>
-      <div><b>Treasurer</b> &mdash; Dr. Johnie A. Burton</div>
-      <div><b>Historian / Archivist</b> &mdash; Dr. Moody A. Amakobe</div>
-      <div><b>Advisor</b> &mdash; Ill. Sir James A. Scott</div>
+      <div><b>President</b> &middot; Alexander Peterson III</div>
+      <div><b>Vice President</b> &middot; Kenneth Swain</div>
+      <div><b>Secretary</b> &middot; W. Aaron Dixon-Saunders</div>
+      <div><b>Treasurer</b> &middot; Dr. Johnie A. Burton</div>
+      <div><b>Historian / Archivist</b> &middot; Dr. Moody A. Amakobe</div>
+      <div><b>Advisor</b> &middot; Ill. Sir James A. Scott</div>
     </div>
     <p class="sec">Chartered by The Phylaxis Society &middot; authorized March 6, 2026 &middot; State of Delaware.</p>
   </footer>
@@ -323,6 +334,8 @@
 <script>
   (function () {
     var form = document.getElementById('apply');
+    // JS is running, so use our own styled validation instead of browser tooltips
+    form.setAttribute('novalidate', 'novalidate');
     var msg  = document.getElementById('msg');
     var btn  = form.querySelector('.btn');
 
@@ -332,7 +345,9 @@
       b.style.borderLeftColor = 'var(--good)';
       b.innerHTML = '<b style="color:var(--good)">Application Received</b>' +
         '<span>Thank you, Brother. Your application has been recorded and the Secretary and President ' +
-        'have been notified. It will be presented to the Chapter at the next stated meeting.</span>';
+        'have been notified. It will be presented to the Chapter at the next stated meeting. ' +
+        'You will receive a confirmation email shortly. If it does not arrive, please contact the ' +
+        'Chapter Secretary.</span>';
       form.parentNode.insertBefore(b, form);
       form.style.display = 'none';
       b.scrollIntoView({ block: 'center' });
@@ -371,7 +386,7 @@
       if (!document.getElementById('agree').checked) {
         return fail('Please tick the certification box to submit your application.');
       }
-      btn.disabled = true; btn.textContent = 'Submitting\u2026';
+      btn.disabled = true; btn.textContent = 'Submitting…';
       msg.className = 'msg'; msg.textContent = '';
       var params = new URLSearchParams();
       new FormData(form).forEach(function (v, k) { params.append(k, v); });
@@ -381,7 +396,7 @@
         .then(showReceived)
         .catch(function () {
           btn.disabled = false; btn.textContent = 'Submit Application';
-          fail('Something went wrong \u2014 please try again, or email the Secretary.');
+          fail('Something went wrong. Please try again, or email the Secretary.');
         });
     });
   })();
