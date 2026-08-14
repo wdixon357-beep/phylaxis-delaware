@@ -75,7 +75,7 @@
   .field input, .field textarea { width: 100%; padding: 12px; font-family: var(--serif);
     font-size: 16px; color: var(--ink); background: var(--ground-raise);
     border: 1px solid var(--line); border-radius: 8px; }
-  .field textarea { line-height: 1.5; resize: vertical; }
+  .field textarea { line-height: 1.5; resize: vertical; min-height: 9.5em; }
   .field input::placeholder, .field textarea::placeholder { color: var(--ink-soft); opacity: .85; }
   .field input:focus, .field textarea:focus { outline: 3px solid var(--royal); outline-offset: 1px;
     border-color: var(--royal); }
@@ -204,9 +204,9 @@
           <span class="hint">List every body you belong to, with numbers where you know them. Your
           Blue Lodge, and any Chapter, Council, Commandery, Consistory, Shrine, or other
           affiliation.</span></span>
-        <textarea id="f-affil" name="Affiliations" rows="4" maxlength="1200"
+        <textarea id="f-affil" name="Affiliations" rows="6" maxlength="1200"
                   required aria-required="true" data-label="your Masonic affiliations"
-                  placeholder="Stone Square Lodge No. 22, Middletown&#10;Corinthian Consistory No. 5, Valley of Wilmington&#10;Hannibal Commandery No. 18"></textarea>
+                  placeholder="Stone Square Lodge No. 22&#10;Corinthian Consistory No. 5&#10;Hannibal Commandery No. 18"></textarea>
         <span class="fielderr" id="e-affil"></span>
       </label>
 
@@ -439,13 +439,40 @@
     b.scrollIntoView({ block: 'center' });
   }
 
-  var submitted = false, timer = null;
+  var submitted = false, timer = null, confirmed = false;
+
+  function failSubmission(reason) {
+    if (!submitted) { return; }
+    submitted = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    btn.disabled = false;
+    btn.textContent = 'Submit Application';
+    msg.className = 'msg err';
+    msg.innerHTML = reason + ' Your answers are still here, so nothing is lost. Please try again, ' +
+      'or send them to the Chapter Secretary at <a href="mailto:' + SECRETARY + '">' + SECRETARY + '</a>.';
+    msg.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  // The backend's confirmation page posts this message. Nothing else can:
+  // not a 404, not a 500, not the browser's own network error page.
+  window.addEventListener('message', function (ev) {
+    if (!submitted) { return; }
+    if (!ev.data || ev.data.phylaxis !== 'received') { return; }
+    confirmed = true;
+    submitted = false;
+    if (timer) { clearTimeout(timer); timer = null; }
+    showReceived();
+  });
 
   document.getElementById('applyframe').addEventListener('load', function () {
     if (!submitted) { return; }               // ignore the initial about:blank load
-    if (timer) { clearTimeout(timer); timer = null; }
-    submitted = false;
-    showReceived();
+    // The frame loaded something. Give the real confirmation a moment to announce
+    // itself; if no announcement arrives, whatever loaded was not our success page.
+    setTimeout(function () {
+      if (submitted && !confirmed) {
+        failSubmission('We could not confirm that your application was received.');
+      }
+    }, 4000);
   });
 
   form.addEventListener('submit', function (e) {
@@ -490,19 +517,14 @@
 
     // valid: let the native POST go to the hidden frame
     submitted = true;
+    confirmed = false;
     btn.disabled = true;
     btn.textContent = 'Submitting…';
     msg.className = 'msg';
     msg.textContent = 'Sending your application…';
 
     timer = setTimeout(function () {
-      if (!submitted) { return; }
-      submitted = false;
-      btn.disabled = false;
-      btn.textContent = 'Submit Application';
-      msg.className = 'msg err';
-      msg.innerHTML = 'That is taking longer than it should. Please check your connection and try ' +
-        'again, or email the Secretary at <a href="mailto:' + SECRETARY + '">' + SECRETARY + '</a>.';
+      failSubmission('That is taking longer than it should.');
     }, 25000);
   });
 })();
