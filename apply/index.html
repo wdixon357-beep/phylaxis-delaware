@@ -131,13 +131,13 @@
   footer .sec { margin-top: 16px; }
   footer a { color: var(--gold); }
 
-  .reveal { opacity: 0; transform: translateY(10px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .reveal { animation: rise .7s cubic-bezier(.2,.7,.3,1) both; }
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; animation: none; }
     * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   }
   .reveal:nth-child(2){animation-delay:.06s}.reveal:nth-child(3){animation-delay:.12s}
-  @keyframes rise { to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
 </style>
 <style>
