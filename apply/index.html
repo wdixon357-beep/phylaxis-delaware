@@ -104,7 +104,7 @@
   /* ---- form ---- */
   .who { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
   @media (max-width: 520px) { .who { grid-template-columns: 1fr; } }
-  label.field { display: flex; flex-direction: column; gap: 6px; font-family: var(--sans);
+  label.field { display: flex; flex-direction: column; gap: 3px; font-family: var(--sans);
     font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 700; }
   input[type="text"] { font-family: var(--serif); font-size: 16px; color: var(--ink);
     background: var(--ground); border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; }
@@ -137,14 +137,20 @@
   @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
 </style>
 <style>
-  .who3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
-  .who2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .who3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px 16px; margin-bottom:20px; }
+  .who2 { display:grid; grid-template-columns:1fr 1fr; gap:12px 16px; margin-bottom:20px; }
   @media (max-width:640px){ .who3,.who2{ grid-template-columns:1fr; } }
-  .field input, .field select { width:100%; margin-top:6px; padding:11px 12px; font-family:var(--serif);
+  .field input, .field select, .field textarea { width:100%; margin-top:0; padding:11px 12px; font-family:var(--serif);
     font-size:16px; color:var(--ink); background:var(--ground-raise);
     border:1px solid var(--line); border-radius:8px; }
-  .field input:focus, .field select:focus { outline:2px solid var(--gold-bright); outline-offset:1px; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:2px solid var(--gold-bright); outline-offset:1px; }
   .req { color:var(--gold); font-weight:700; }
+  .field > span { line-height:1.35; }
+  .hint { display:block; font-family:var(--sans); font-size:12px; font-weight:400;
+    color:var(--ink-soft); letter-spacing:0; text-transform:none; margin-top:2px; }
+  .field textarea { font-family:var(--serif); font-size:16px; line-height:1.5; resize:vertical; }
+  .sig input { font-family:var(--script,"Snell Roundhand","Apple Chancery",cursive);
+    font-size:22px; letter-spacing:.01em; padding:14px 12px; }
   .dues { border:1px solid var(--gold); border-radius:10px; background:var(--ground-raise);
     padding:16px 18px; margin:10px 0 4px; }
   .dues .amt { font-family:var(--serif); font-size:26px; color:var(--ink); font-weight:700; }
@@ -186,28 +192,30 @@
           <input type="text" name="Title" placeholder="PM, WM, R.W., Ill. Sir …">
         </label>
       </div>
+
+      <label class="field" style="margin-bottom:20px">
+        <span>Masonic affiliations <b class="req">*</b>
+          <span class="hint">List every body you belong to, with numbers where you know them. Your Blue
+          Lodge, and any Chapter, Council, Commandery, Consistory, Shrine, or other affiliation.</span>
+        </span>
+        <textarea id="lodge" name="Affiliations" rows="4"
+          placeholder="Stone Square Lodge No. 22, Middletown&#10;Corinthian Consistory No. 5, Valley of Wilmington&#10;Hannibal Commandery No. 18"></textarea>
+      </label>
+
       <div class="who2">
-        <label class="field"><span>Masonic No.</span>
-          <input type="text" name="MasonicNo" placeholder="If known">
-        </label>
-      </div>
-      <div class="who2">
-        <label class="field"><span>Lodge / Chapter / Consistory <b class="req">*</b></span>
-          <input type="text" id="lodge" name="Lodge" placeholder="Lodge &amp; No.">
-        </label>
         <label class="field"><span>Current Masonic office</span>
           <input type="text" name="Office" placeholder="If any">
-        </label>
-      </div>
-      <div class="who2">
-        <label class="field"><span>Email <b class="req">*</b></span>
-          <input type="email" id="email" name="Email" autocomplete="email" placeholder="you@example.com">
         </label>
         <label class="field"><span>Telephone</span>
           <input type="tel" name="Phone" autocomplete="tel" placeholder="(302) 555-0123">
         </label>
       </div>
-      <label class="field"><span>Mailing address</span>
+
+      <label class="field" style="margin-bottom:20px"><span>Email <b class="req">*</b></span>
+        <input type="email" id="email" name="Email" autocomplete="email" placeholder="you@example.com">
+      </label>
+
+      <label class="field" style="margin-bottom:20px"><span>Mailing address</span>
         <input type="text" name="Address" autocomplete="street-address" placeholder="Street">
       </label>
       <div class="who3">
@@ -277,8 +285,18 @@
       <label class="item cert-box">
         <input type="checkbox" id="agree" name="Certification" value="Agreed">
         <span class="name">I agree, and I submit this application <span class="req">*</span></span>
-        <span class="desc">Typing your name above serves as your signature.</span>
+        <span class="desc">Tick the box, then sign your name below.</span>
       </label>
+      <div class="who2" style="margin-top:16px;margin-bottom:0">
+        <label class="field sig"><span>Signature <b class="req">*</b>
+            <span class="hint">Type your full name. This serves as your signature.</span></span>
+          <input type="text" id="signature" name="Signature" placeholder="Your full name">
+        </label>
+        <label class="field"><span>Date
+            <span class="hint">Filled in automatically.</span></span>
+          <input type="text" id="sigdate" name="Date" readonly>
+        </label>
+      </div>
     </fieldset>
 
     <div class="actions">
@@ -320,6 +338,13 @@
     }
     if (window.location.search.indexOf('submitted=1') !== -1) { showReceived(); }
 
+    (function () {
+      var d = new Date();
+      var el = document.getElementById('sigdate');
+      if (el) el.value = d.toLocaleDateString('en-US',
+        { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+    })();
+
     function fail(t){ msg.className='msg err'; msg.textContent=t; }
 
     form.addEventListener('submit', function (e) {
@@ -328,10 +353,13 @@
       var lodge = document.getElementById('lodge').value.trim();
       var email = document.getElementById('email').value.trim();
       if (!name)  { return fail('Please enter your full name.'); }
-      if (!lodge) { return fail('Please enter your lodge, chapter, or consistory.'); }
+      if (!lodge) { return fail('Please list your Masonic affiliations.'); }
       if (!email || email.indexOf('@') < 1) { return fail('Please enter a valid email address.'); }
       if (!document.getElementById('agree').checked) {
         return fail('Please tick the certification box to submit your application.');
+      }
+      if (!document.getElementById('signature').value.trim()) {
+        return fail('Please type your name in the signature box.');
       }
       btn.disabled = true; btn.textContent = 'Submitting\u2026';
       msg.className = 'msg'; msg.textContent = '';
