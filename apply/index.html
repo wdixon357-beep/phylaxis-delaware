@@ -1,0 +1,350 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phylaxis Society — Delaware Chapter Membership Application</title>
+<style>
+  :root {
+    --ground: #F4EFE4;
+    --ground-raise: #FBF8F1;
+    --ink: #1A2438;
+    --ink-soft: #545B6E;
+    --gold: #9A7B29;
+    --gold-bright: #C9A24B;
+    --royal: #22436B;
+    --line: rgba(26, 36, 56, 0.16);
+    --line-soft: rgba(26, 36, 56, 0.08);
+    --good: #2E6B4F;
+    --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+    --sans: "Helvetica Neue", Arial, system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #101827;
+      --ground-raise: #17223A;
+      --ink: #ECE3CD;
+      --ink-soft: #A7AEC0;
+      --gold: #CBA24E;
+      --gold-bright: #E3C273;
+      --royal: #9EB7D8;
+      --line: rgba(236, 227, 205, 0.17);
+      --line-soft: rgba(236, 227, 205, 0.08);
+      --good: #6FBF97;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #F4EFE4; --ground-raise: #FBF8F1; --ink: #1A2438; --ink-soft: #545B6E;
+    --gold: #9A7B29; --gold-bright: #C9A24B; --royal: #22436B;
+    --line: rgba(26,36,56,.16); --line-soft: rgba(26,36,56,.08); --good: #2E6B4F;
+    --shadow: 0 1px 2px rgba(26,36,56,.06), 0 8px 30px rgba(26,36,56,.07);
+  }
+  :root[data-theme="dark"] {
+    --ground: #101827; --ground-raise: #17223A; --ink: #ECE3CD; --ink-soft: #A7AEC0;
+    --gold: #CBA24E; --gold-bright: #E3C273; --royal: #9EB7D8;
+    --line: rgba(236,227,205,.17); --line-soft: rgba(236,227,205,.08); --good: #6FBF97;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--serif);
+    line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(20px, 5vw, 40px) 72px; }
+
+  .eyebrow { font-family: var(--sans); text-transform: uppercase; letter-spacing: .22em;
+    font-size: 11px; font-weight: 700; color: var(--gold); }
+
+  /* ---- crest ---- */
+  .crest { text-align: center; }
+  .crest svg { width: 62px; height: 62px; display: block; margin: 0 auto 18px; }
+  .rule { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 14px 0 0; }
+  .rule::before, .rule::after { content: ""; height: 1px; width: min(90px, 22vw); background: var(--line); }
+  .rule span { font-family: var(--sans); text-transform: uppercase; letter-spacing: .28em;
+    font-size: 10px; color: var(--ink-soft); }
+  h1 { font-size: clamp(26px, 5vw, 38px); line-height: 1.15; text-wrap: balance; margin: 20px 0 6px;
+    font-weight: 600; letter-spacing: .005em; }
+  .chapter { font-size: clamp(15px, 2.4vw, 18px); color: var(--ink-soft); margin: 0; font-style: italic; }
+  .motto { max-width: 46ch; margin: 22px auto 0; text-align: center; font-size: 15px; color: var(--ink-soft);
+    font-style: italic; }
+  .motto::before, .motto::after { color: var(--gold); }
+
+  /* ---- deadline banner ---- */
+  .banner { margin: 34px 0 8px; border: 1px solid var(--line); border-left: 3px solid var(--gold);
+    background: var(--ground-raise); border-radius: 4px; padding: 16px 20px; box-shadow: var(--shadow);
+    display: flex; flex-wrap: wrap; gap: 6px 26px; align-items: baseline; }
+  .banner b { font-family: var(--sans); font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; }
+  .banner span { font-size: 15px; }
+
+  .lede { margin: 30px 0 8px; font-size: 17px; }
+
+  h2 { font-size: 13px; font-family: var(--sans); text-transform: uppercase; letter-spacing: .16em;
+    font-weight: 700; color: var(--ink-soft); margin: 44px 0 4px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--line); }
+  .h2note { font-size: 14px; color: var(--ink-soft); margin: 0 0 18px; }
+
+  /* ---- committee list ---- */
+  fieldset { border: 0; margin: 0; padding: 0; }
+  .item { display: grid; grid-template-columns: auto 1fr; gap: 2px 16px; align-items: start;
+    padding: 16px 18px; border: 1px solid var(--line-soft); border-radius: 6px; background: var(--ground-raise);
+    box-shadow: var(--shadow); cursor: pointer; transition: border-color .15s ease, transform .15s ease; }
+  .item + .item { margin-top: 10px; }
+  .item:hover { border-color: var(--line); }
+  .item:has(input:checked) { border-color: var(--gold); }
+  .item:has(input:focus-visible) { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
+  .item input { grid-row: 1 / span 2; width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--gold);
+    cursor: pointer; }
+  .item .name { font-size: 18px; font-weight: 600; }
+  .item .desc { grid-column: 2; color: var(--ink-soft); font-size: 15px; }
+
+  /* ---- clean-up callout ---- */
+  .cleanup { margin-top: 12px; border-color: var(--line); }
+  .cleanup .when { grid-column: 2; font-family: var(--sans); font-size: 12px; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--gold); font-weight: 700; margin-top: 4px; }
+
+  /* ---- form ---- */
+  .who { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  @media (max-width: 520px) { .who { grid-template-columns: 1fr; } }
+  label.field { display: flex; flex-direction: column; gap: 6px; font-family: var(--sans);
+    font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); font-weight: 700; }
+  input[type="text"] { font-family: var(--serif); font-size: 16px; color: var(--ink);
+    background: var(--ground); border: 1px solid var(--line); border-radius: 5px; padding: 11px 13px; }
+  input[type="text"]:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 1px; border-color: var(--gold); }
+
+  .actions { margin-top: 26px; }
+  .btn { font-family: var(--sans); font-weight: 700; letter-spacing: .04em; font-size: 17px;
+    width: 100%; background: var(--gold); color: #101827; border: 1px solid transparent; border-radius: 6px;
+    padding: 17px 26px; cursor: pointer; transition: transform .12s ease, box-shadow .15s ease, background .15s ease; }
+  .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); background: var(--gold-bright); }
+  .btn:focus-visible { outline: 2px solid var(--royal); outline-offset: 2px; }
+  .msg { display: block; margin-top: 12px; text-align: center; font-size: 14px; color: var(--ink-soft); font-family: var(--sans); }
+  .msg.err { color: #B0402F; font-weight: 600; }
+  :root[data-theme="dark"] .msg.err { color: #E88C7A; }
+
+  .fallback { margin-top: 14px; font-size: 14px; color: var(--ink-soft); }
+  .fallback a { color: var(--gold); }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 14px;
+    color: var(--ink-soft); }
+  footer .off { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; margin: 12px 0 0; }
+  @media (max-width: 520px) { footer .off { grid-template-columns: 1fr; } }
+  footer .off b { color: var(--ink); font-weight: 600; }
+  footer .sec { margin-top: 16px; }
+  footer a { color: var(--gold); }
+
+  .reveal { opacity: 0; transform: translateY(10px); animation: rise .7s cubic-bezier(.2,.7,.3,1) forwards; }
+  .reveal:nth-child(2){animation-delay:.06s}.reveal:nth-child(3){animation-delay:.12s}
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .reveal { animation: none; opacity: 1; transform: none; } }
+</style>
+<style>
+  .who3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .who2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .who3,.who2{ grid-template-columns:1fr; } }
+  .field input, .field select { width:100%; margin-top:6px; padding:11px 12px; font-family:var(--serif);
+    font-size:16px; color:var(--ink); background:var(--ground-raise);
+    border:1px solid var(--line); border-radius:8px; }
+  .field input:focus, .field select:focus { outline:2px solid var(--gold-bright); outline-offset:1px; }
+  .req { color:var(--gold); font-weight:700; }
+  .dues { border:1px solid var(--gold); border-radius:10px; background:var(--ground-raise);
+    padding:16px 18px; margin:10px 0 4px; }
+  .dues .amt { font-family:var(--serif); font-size:26px; color:var(--ink); font-weight:700; }
+  .dues .note { font-family:var(--sans); font-size:12.5px; color:var(--ink-soft); margin-top:4px; }
+  .cert { font-size:14.5px; color:var(--ink-soft); border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px; margin:18px 0 6px; }
+</style>
+
+<div class="wrap">
+  <header class="crest reveal">
+    <svg viewBox="0 0 100 100" fill="none" stroke="var(--gold)" stroke-width="2.4"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="50" cy="50" r="46" stroke="var(--line)" stroke-width="1.5"/>
+      <path d="M28 54 L50 74 L72 54"/>
+      <path d="M50 24 L34 66" />
+      <path d="M50 24 L66 66" />
+      <circle cx="50" cy="24" r="3.4" fill="var(--gold)" stroke="none"/>
+      <circle cx="50" cy="50" r="3.2" stroke-width="1.6"/>
+    </svg>
+    <div class="rule"><span>The Phylaxis Society</span></div>
+    <h1>Membership Application</h1>
+    <p class="chapter">John T. Luke, Grand Lecturer Emeritus Delaware Chapter, P.H.A.</p>
+    <p class="motto">&ldquo;A society for Prince Hall Masons who seek more light and who have light to impart.&rdquo;</p>
+  </header>
+
+  <p class="lede reveal">Preserving our history &middot; Educating our brethren &middot; Advancing our legacy.
+  Complete the application below and press Submit &mdash; the Secretary and the President are notified at once.
+  Applications are presented to the Chapter for a vote at the next stated meeting.</p>
+
+  <form id="apply" action="https://script.google.com/macros/s/AKfycbwCjdqu1pE_En5hMwNICNTSXYvxLjPPs5KmCBiRCPfBdH9W_DkYcRteQvcVn146d7Oy/exec" method="POST">
+
+    <h2>Applicant Information</h2>
+    <fieldset>
+      <div class="who2">
+        <label class="field"><span>Full name <b class="req">*</b></span>
+          <input type="text" id="name" name="Name" autocomplete="name" placeholder="Bro. …">
+        </label>
+        <label class="field"><span>Masonic title or rank</span>
+          <input type="text" name="Title" placeholder="PM, WM, R.W., Ill. Sir …">
+        </label>
+      </div>
+      <div class="who2">
+        <label class="field"><span>Masonic No.</span>
+          <input type="text" name="MasonicNo" placeholder="If known">
+        </label>
+      </div>
+      <div class="who2">
+        <label class="field"><span>Lodge / Chapter / Consistory <b class="req">*</b></span>
+          <input type="text" id="lodge" name="Lodge" placeholder="Lodge &amp; No.">
+        </label>
+        <label class="field"><span>Current Masonic office</span>
+          <input type="text" name="Office" placeholder="If any">
+        </label>
+      </div>
+      <div class="who2">
+        <label class="field"><span>Email <b class="req">*</b></span>
+          <input type="email" id="email" name="Email" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label class="field"><span>Telephone</span>
+          <input type="tel" name="Phone" autocomplete="tel" placeholder="(302) 555-0123">
+        </label>
+      </div>
+      <label class="field"><span>Mailing address</span>
+        <input type="text" name="Address" autocomplete="street-address" placeholder="Street">
+      </label>
+      <div class="who3">
+        <label class="field"><span>City</span>
+          <input type="text" name="City" autocomplete="address-level2">
+        </label>
+        <label class="field"><span>State</span>
+          <input type="text" name="State" autocomplete="address-level1" value="DE">
+        </label>
+        <label class="field"><span>ZIP</span>
+          <input type="text" name="ZIP" autocomplete="postal-code" inputmode="numeric">
+        </label>
+      </div>
+    </fieldset>
+
+    <h2>Annual Membership</h2>
+    <div class="dues">
+      <div class="amt">$10.00 &middot; Annual Chapter Membership</div>
+      <div class="note">Chapter dues are payable to the Treasurer once the application is approved by the
+      Chapter. National Phylaxis Society membership is separate and is $50.00 per year.</div>
+    </div>
+
+    <h2>Areas of Interest</h2>
+    <p class="h2note">Choose one or more.</p>
+    <fieldset>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Masonic History &amp; Research">
+        <span class="name">Masonic History &amp; Research</span>
+        <span class="desc">Researching Delaware's founders, Grand Masters, veterans, and pioneering families.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Archives &amp; Records">
+        <span class="name">Archives &amp; Records</span>
+        <span class="desc">Collecting, preserving, organizing, and digitizing historical records.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Genealogy">
+        <span class="name">Genealogy</span>
+        <span class="desc">Documenting the histories of prominent Prince Hall families.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Oral History">
+        <span class="name">Oral History</span>
+        <span class="desc">Interviewing our senior members to preserve their memories and experiences.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Publications &amp; Digital Digest">
+        <span class="name">Publications &amp; Digital Digest</span>
+        <span class="desc">Gathering reports from all Prince Hall Affiliated bodies and producing the Digest.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Education &amp; Lectures">
+        <span class="name">Education &amp; Lectures</span>
+        <span class="desc">Planning educational presentations and identifying qualified speakers.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Photography &amp; Documentation">
+        <span class="name">Photography &amp; Documentation</span>
+        <span class="desc">Photographing occasions, brethren, and records for the Digest and the archive.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Community Outreach">
+        <span class="name">Community Outreach</span>
+        <span class="desc">Carrying the chapter's work into the towns our lodges sit in.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Fundraising">
+        <span class="name">Fundraising</span>
+        <span class="desc">Identifying funding opportunities and supporting the needs of the chapter.</span></label>
+      <label class="item"><input type="checkbox" name="Interest[]" value="Technology &amp; Digital Archives">
+        <span class="name">Technology &amp; Digital Archives</span>
+        <span class="desc">Building and maintaining the chapter's digital archive and systems.</span></label>
+      <label class="field" style="margin-top:14px"><span>Other</span>
+        <input type="text" name="Other" placeholder="Anything not listed above">
+      </label>
+    </fieldset>
+
+    <h2>Certification</h2>
+    <p class="cert">I hereby apply for membership in the John T. Luke, Grand Lecturer Emeritus Delaware
+    Chapter of The Phylaxis Society. I support the Chapter&rsquo;s mission to preserve, research, document,
+    and promote the history, traditions, achievements, and legacy of Prince Hall Freemasonry, and I agree
+    to participate in its activities to the best of my ability.</p>
+    <fieldset>
+      <label class="item cert-box">
+        <input type="checkbox" id="agree" name="Certification" value="Agreed">
+        <span class="name">I agree, and I submit this application <span class="req">*</span></span>
+        <span class="desc">Typing your name above serves as your signature.</span>
+      </label>
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit" class="btn">Submit Application</button>
+    </div>
+    <span class="msg" id="msg" role="status" aria-live="polite"></span>
+  </form>
+
+  <footer class="reveal">
+    <div class="eyebrow">Chapter Officers</div>
+    <div class="off">
+      <div><b>President</b> &mdash; Alexander Peterson III</div>
+      <div><b>Vice President</b> &mdash; Kenneth Swain</div>
+      <div><b>Secretary</b> &mdash; W. Aaron Dixon-Saunders</div>
+      <div><b>Treasurer</b> &mdash; Dr. Johnie A. Burton</div>
+      <div><b>Historian / Archivist</b> &mdash; Dr. Moody A. Amakobe</div>
+      <div><b>Advisor</b> &mdash; Ill. Sir James A. Scott</div>
+    </div>
+    <p class="sec">Chartered by The Phylaxis Society &middot; authorized March 6, 2026 &middot; State of Delaware.</p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('apply');
+    var msg  = document.getElementById('msg');
+    var btn  = form.querySelector('.btn');
+
+    function showReceived() {
+      var b = document.createElement('div');
+      b.className = 'banner';
+      b.style.borderLeftColor = 'var(--good)';
+      b.innerHTML = '<b style="color:var(--good)">Application Received</b>' +
+        '<span>Thank you, Brother. Your application has been recorded and the Secretary and President ' +
+        'have been notified. It will be presented to the Chapter at the next stated meeting.</span>';
+      form.parentNode.insertBefore(b, form);
+      form.style.display = 'none';
+      b.scrollIntoView({ block: 'center' });
+    }
+    if (window.location.search.indexOf('submitted=1') !== -1) { showReceived(); }
+
+    function fail(t){ msg.className='msg err'; msg.textContent=t; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name  = document.getElementById('name').value.trim();
+      var lodge = document.getElementById('lodge').value.trim();
+      var email = document.getElementById('email').value.trim();
+      if (!name)  { return fail('Please enter your full name.'); }
+      if (!lodge) { return fail('Please enter your lodge, chapter, or consistory.'); }
+      if (!email || email.indexOf('@') < 1) { return fail('Please enter a valid email address.'); }
+      if (!document.getElementById('agree').checked) {
+        return fail('Please tick the certification box to submit your application.');
+      }
+      btn.disabled = true; btn.textContent = 'Submitting\u2026';
+      msg.className = 'msg'; msg.textContent = '';
+      var params = new URLSearchParams();
+      new FormData(form).forEach(function (v, k) { params.append(k, v); });
+      fetch(form.action, { method:'POST', mode:'no-cors',
+        headers:{ 'Content-Type':'application/x-www-form-urlencoded' },
+        body: params.toString() })
+        .then(showReceived)
+        .catch(function () {
+          btn.disabled = false; btn.textContent = 'Submit Application';
+          fail('Something went wrong \u2014 please try again, or email the Secretary.');
+        });
+    });
+  })();
+</script>
