@@ -178,7 +178,7 @@
 
   <p class="lede reveal">Preserving our history &middot; Educating our brethren &middot; Advancing our legacy.
   Complete the application below and press Submit &mdash; the Secretary and the President are notified at once.
-  Applications are presented to the Chapter for a vote at the next stated meeting.</p>
+  Applications are presented to the Chapter for a vote at the next stated meeting. Every field is required except Masonic title or rank.</p>
 
   <form id="apply" action="https://script.google.com/macros/s/AKfycbwCjdqu1pE_En5hMwNICNTSXYvxLjPPs5KmCBiRCPfBdH9W_DkYcRteQvcVn146d7Oy/exec" method="POST">
 
@@ -186,9 +186,10 @@
     <fieldset>
       <div class="who2">
         <label class="field"><span>Full name <b class="req">*</b></span>
-          <input type="text" id="name" name="Name" autocomplete="name" placeholder="Bro. …">
+          <input type="text" id="name" name="Name" data-req="your full name" autocomplete="name" placeholder="Bro. …">
         </label>
-        <label class="field"><span>Masonic title or rank</span>
+        <label class="field"><span>Masonic title or rank
+            <span class="hint">Optional. Leave blank if none.</span></span>
           <input type="text" name="Title" placeholder="PM, WM, R.W., Ill. Sir …">
         </label>
       </div>
@@ -198,35 +199,35 @@
           <span class="hint">List every body you belong to, with numbers where you know them. Your Blue
           Lodge, and any Chapter, Council, Commandery, Consistory, Shrine, or other affiliation.</span>
         </span>
-        <textarea id="lodge" name="Affiliations" rows="4"
+        <textarea id="lodge" name="Affiliations" data-req="your Masonic affiliations" rows="4"
           placeholder="Stone Square Lodge No. 22, Middletown&#10;Corinthian Consistory No. 5, Valley of Wilmington&#10;Hannibal Commandery No. 18"></textarea>
       </label>
 
       <div class="who2">
-        <label class="field"><span>Current Masonic office</span>
-          <input type="text" name="Office" placeholder="If any">
+        <label class="field"><span>Current Masonic office <b class="req">*</b></span>
+          <input type="text" name="Office" data-req="your current Masonic office" placeholder="Your office, or None">
         </label>
-        <label class="field"><span>Telephone</span>
-          <input type="tel" name="Phone" autocomplete="tel" placeholder="(302) 555-0123">
+        <label class="field"><span>Telephone <b class="req">*</b></span>
+          <input type="tel" name="Phone" data-req="your telephone number" autocomplete="tel" placeholder="(302) 555-0123">
         </label>
       </div>
 
       <label class="field" style="margin-bottom:20px"><span>Email <b class="req">*</b></span>
-        <input type="email" id="email" name="Email" autocomplete="email" placeholder="you@example.com">
+        <input type="email" id="email" name="Email" data-req="your email address" autocomplete="email" placeholder="you@example.com">
       </label>
 
-      <label class="field" style="margin-bottom:20px"><span>Mailing address</span>
-        <input type="text" name="Address" autocomplete="street-address" placeholder="Street">
+      <label class="field" style="margin-bottom:20px"><span>Mailing address <b class="req">*</b></span>
+        <input type="text" name="Address" data-req="your mailing address" autocomplete="street-address" placeholder="Street">
       </label>
       <div class="who3">
-        <label class="field"><span>City</span>
-          <input type="text" name="City" autocomplete="address-level2">
+        <label class="field"><span>City <b class="req">*</b></span>
+          <input type="text" name="City" data-req="your city" autocomplete="address-level2">
         </label>
-        <label class="field"><span>State</span>
-          <input type="text" name="State" autocomplete="address-level1" value="DE">
+        <label class="field"><span>State <b class="req">*</b></span>
+          <input type="text" name="State" data-req="your state" autocomplete="address-level1" value="DE">
         </label>
-        <label class="field"><span>ZIP</span>
-          <input type="text" name="ZIP" autocomplete="postal-code" inputmode="numeric">
+        <label class="field"><span>ZIP <b class="req">*</b></span>
+          <input type="text" name="ZIP" data-req="your ZIP code" autocomplete="postal-code" inputmode="numeric">
         </label>
       </div>
     </fieldset>
@@ -290,7 +291,7 @@
       <div class="who2" style="margin-top:16px;margin-bottom:0">
         <label class="field sig"><span>Signature <b class="req">*</b>
             <span class="hint">Type your full name. This serves as your signature.</span></span>
-          <input type="text" id="signature" name="Signature" placeholder="Your full name">
+          <input type="text" id="signature" name="Signature" data-req="your signature" placeholder="Your full name">
         </label>
         <label class="field"><span>Date
             <span class="hint">Filled in automatically.</span></span>
@@ -349,17 +350,26 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name  = document.getElementById('name').value.trim();
-      var lodge = document.getElementById('lodge').value.trim();
+      var missing = null;
+      var fields = form.querySelectorAll('[data-req]');
+      for (var i = 0; i < fields.length; i++) {
+        if (!fields[i].value.trim()) { missing = fields[i]; break; }
+      }
+      if (missing) {
+        missing.focus();
+        missing.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return fail('Please enter ' + missing.getAttribute('data-req') + '.');
+      }
       var email = document.getElementById('email').value.trim();
-      if (!name)  { return fail('Please enter your full name.'); }
-      if (!lodge) { return fail('Please list your Masonic affiliations.'); }
-      if (!email || email.indexOf('@') < 1) { return fail('Please enter a valid email address.'); }
+      if (email.indexOf('@') < 1 || email.indexOf('.') < 1) {
+        document.getElementById('email').focus();
+        return fail('Please enter a valid email address.');
+      }
+      if (!form.querySelectorAll('input[name="Interest[]"]:checked').length) {
+        return fail('Please choose at least one area of interest.');
+      }
       if (!document.getElementById('agree').checked) {
         return fail('Please tick the certification box to submit your application.');
-      }
-      if (!document.getElementById('signature').value.trim()) {
-        return fail('Please type your name in the signature box.');
       }
       btn.disabled = true; btn.textContent = 'Submitting\u2026';
       msg.className = 'msg'; msg.textContent = '';
