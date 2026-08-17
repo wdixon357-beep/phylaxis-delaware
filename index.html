@@ -1,4 +1,4 @@
-<title>Phylaxis Society — Delaware Chapter Committee Sign-Up</title>
+<title>Phylaxis Society, Delaware Chapter Committee Sign-Up</title>
 <style>
   :root {
     --ground: #F4EFE4;
@@ -151,7 +151,7 @@
     <div class="rule"><span>The Phylaxis Society</span></div>
     <h1>Committee Volunteer Sign-Up</h1>
     <p class="chapter">John T. Luke, Grand Lecturer Emeritus Delaware Chapter, P.H.A.</p>
-    <p class="motto">“A society for Prince Hall Masons who seek more light and who have light to impart.”</p>
+    <p class="motto">"A society for Prince Hall Masons who seek more light and who have light to impart."</p>
   </header>
 
   <div class="banner reveal">
@@ -160,7 +160,7 @@
 
   <p class="lede reveal">Every charter member is asked to serve on at least one standing committee.
   Read the work of each below, tick the ones you will support, add your name and lodge, and press
-  Submit — the Secretary and the President are notified of your choices at once.</p>
+  Submit, and the Secretary and the President are notified of your choices at once.</p>
 
   <form id="signup" action="https://script.google.com/macros/s/AKfycbymjxXd_-9yV9oEYtvrSfVsLMUh6WSqVOl4NVIdDLlHwHgciH20piJbOdNs2nwg3qWJlw/exec" method="POST">
     <h2>Standing Committees</h2>
@@ -214,19 +214,19 @@
     </fieldset>
 
     <h2>Grand East Clean-Up &amp; Documentation</h2>
-    <p class="h2note">A first step toward our permanent digital archive — photographing records and
+    <p class="h2note">A first step toward our permanent digital archive, photographing records and
     artifacts before they are lost to age, with the permission of MW Grand Master Vandrick Hamlin, Jr.</p>
     <fieldset>
       <label class="item cleanup">
         <input type="checkbox" name="Restoration Day July 29" value="Yes, I will attend">
         <span class="name">Count me in for Grand East Restoration Day</span>
-        <span class="when">Wednesday, July 29, 2026 · 11:00 AM · Grand East, Dover · reply by July 27</span>
+        <span class="when">Wednesday, July 29, 2026 &middot; 11:00 AM &middot; Grand East, Dover &middot; reply by July 27</span>
       </label>
     </fieldset>
 
     <div class="who">
       <label class="field">Your name
-        <input type="text" id="name" name="Name" autocomplete="name" placeholder="Bro. …">
+        <input type="text" id="name" name="Name" autocomplete="name" placeholder="Bro. ...">
       </label>
       <label class="field">Your lodge
         <input type="text" id="lodge" name="Lodge" autocomplete="off" placeholder="Lodge &amp; No.">
@@ -239,17 +239,21 @@
     <span class="msg" id="msg" role="status" aria-live="polite"></span>
   </form>
 
+  <p style="text-align:center;margin:34px 0 0">
+    <a href="apply/" style="color:#22436B;font-weight:600">Not yet a member of the Chapter? Apply for membership here.</a>
+  </p>
+
   <footer class="reveal">
     <div class="eyebrow">Chapter Officers</div>
     <div class="off">
-      <div><b>President</b> — Alexander Peterson III</div>
-      <div><b>Vice President</b> — Kenneth Swain</div>
-      <div><b>Secretary</b> — W. Aaron Dixon-Saunders</div>
-      <div><b>Treasurer</b> — Dr. Johnie A. Burton</div>
-      <div><b>Historian / Archivist</b> — Dr. Moody A. Amakobe</div>
-      <div><b>Advisor</b> — Ill. Sir James A. Scott</div>
+      <div><b>President</b>, Alexander Peterson III</div>
+      <div><b>Vice President</b>, Kenneth Swain</div>
+      <div><b>Secretary</b>, W. Aaron Dixon-Saunders</div>
+      <div><b>Treasurer</b>, Dr. Johnie A. Burton</div>
+      <div><b>Historian / Archivist</b>, Dr. Moody A. Amakobe</div>
+      <div><b>Advisor</b>, Ill. Sir James A. Scott</div>
     </div>
-    <p class="sec">Chartered by The Phylaxis Society · authorized March 6, 2026 · State of Delaware.</p>
+    <p class="sec">Chartered by The Phylaxis Society &middot; authorized March 6, 2026 &middot; State of Delaware.</p>
   </footer>
 </div>
 
@@ -264,7 +268,7 @@
       banner.className = 'banner';
       banner.style.borderLeftColor = 'var(--good)';
       banner.innerHTML = '<b style="color:var(--good)">Received</b>' +
-        '<span>Thank you, Brother — your sign-up has been recorded and the Secretary and President have been notified.</span>';
+        '<span>Thank you, Brother. Your sign-up has been recorded and the Secretary and President have been notified.</span>';
       form.parentNode.insertBefore(banner, form);
       form.style.display = 'none';
       banner.scrollIntoView({ block: 'center' });
@@ -289,7 +293,7 @@
         return;
       }
       btn.disabled = true;
-      btn.textContent = 'Submitting…';
+      btn.textContent = 'Submitting...';
       msg.className = 'msg';
       msg.textContent = '';
       var params = new URLSearchParams();
@@ -302,7 +306,7 @@
           btn.disabled = false;
           btn.textContent = 'Submit';
           msg.className = 'msg err';
-          msg.textContent = 'Something went wrong — please try again, or email the Secretary.';
+          msg.textContent = 'Something went wrong. Please try again, or email the Secretary.';
         });
     });
   })();
