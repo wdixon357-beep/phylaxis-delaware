@@ -20,10 +20,20 @@
 //   5. Honeypot field, minimum fill time, burst cap, daily cap, and a mail-quota reserve.
 //   6. A kill switch reachable from a phone: doGet with the admin key.
 
-// TESTING ONLY. The President is removed so test submissions do not flood his inbox.
-// RESTORE THIS LINE BEFORE THE FORM IS PUBLICISED:
-//   const NOTIFY = ['brodixonsaunders@stonesquare22pha.org', 'apiii@mac.com'];
-const NOTIFY = ['brodixonsaunders@stonesquare22pha.org'];
+// NOTIFY is read from Script Properties so no officer's personal address sits in a public repo.
+// Set them in the editor: Project Settings > Script Properties > NOTIFY_LIST
+// as a comma separated list. Falls back to the Secretary alone if unset.
+const NOTIFY = (function () {
+  try {
+    const raw = PropertiesService.getScriptProperties().getProperty('NOTIFY_LIST');
+    if (raw) {
+      const list = raw.split(',').map(function (s) { return s.trim(); })
+                      .filter(function (s) { return s; });
+      if (list.length) { return list; }
+    }
+  } catch (err) {}
+  return ['brodixonsaunders@stonesquare22pha.org'];
+})();
 const FORM_URL = 'https://wdixon357-beep.github.io/phylaxis-delaware/apply/';
 const CHAPTER = 'John T. Luke, Grand Lecturer Emeritus Delaware Chapter of The Phylaxis Society';
 const SECRETARY = 'brodixonsaunders@stonesquare22pha.org';
