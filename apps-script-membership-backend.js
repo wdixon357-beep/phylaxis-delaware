@@ -135,8 +135,10 @@ function handle(e) {
   if (!f.office) { missing.push('your current Masonic office'); }
   if (!validPhone_(f.phone)) { missing.push('a ten digit telephone number'); }
   if (!validEmail_(f.email)) { missing.push('a valid email address'); }
+  if (!f.address) { missing.push('your mailing address'); }
   if (!f.city) { missing.push('your city'); }
   if (!f.state) { missing.push('your state'); }
+  if (!validZip_(f.zip)) { missing.push('a five digit ZIP code'); }
   if (!interests.length && !f.other) { missing.push('at least one area of interest'); }
   if (!f.signature) { missing.push('your signature'); }
   if (!certified) { missing.push('the certification box, which must be checked'); }
