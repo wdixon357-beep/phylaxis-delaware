@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Membership Application · The Phylaxis Society, Delaware Chapter</title>
+<title>Membership Application, The Phylaxis Society, Delaware Chapter</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -107,9 +107,9 @@
   .btn { font-family: var(--sans); font-size: 17px; font-weight: 700; letter-spacing: .04em;
     color: #16203A; background: var(--gold-bright); border: 1px solid var(--gold);
     padding: 16px 30px; border-radius: 10px; cursor: pointer; width: 100%; }
-  .btn:hover { background: var(--gold); }
+  .btn:hover { background: #AF8C2F; }
   .btn:focus-visible { outline: 3px solid var(--royal); outline-offset: 2px; }
-  .btn[disabled] { opacity: .65; cursor: default; }
+  .btn[disabled], .btn[aria-disabled="true"] { opacity: .65; cursor: default; }
 
   .msg { display: block; font-family: var(--sans); font-size: 14.5px; font-weight: 600;
     margin-top: 14px; min-height: 1.3em; }
@@ -180,6 +180,12 @@
   <form id="apply" method="POST"
         action="https://script.google.com/macros/s/AKfycbwCjdqu1pE_En5hMwNICNTSXYvxLjPPs5KmCBiRCPfBdH9W_DkYcRteQvcVn146d7Oy/exec">
 
+    <!-- Not for applicants. People leave it empty, robots fill it in. Do not remove. -->
+    <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+      <label>Company <input type="text" name="Company" tabindex="-1" autocomplete="off"></label>
+    </div>
+    <input type="hidden" name="t" id="f-t">
+
     <fieldset>
       <legend><h2>Applicant Information</h2></legend>
 
@@ -229,13 +235,7 @@
         <span class="fielderr" id="e-email"></span>
       </label>
 
-      <label class="field"><span>Mailing address <b class="req" aria-hidden="true">*</b></span>
-        <input type="text" id="f-address" name="Address" autocomplete="street-address" maxlength="160"
-               required aria-required="true" data-label="your mailing address" placeholder="Street">
-        <span class="fielderr" id="e-address"></span>
-      </label>
-
-      <div class="who3">
+      <div class="who2">
         <label class="field"><span>City <b class="req" aria-hidden="true">*</b></span>
           <input type="text" id="f-city" name="City" autocomplete="address-level2" maxlength="80"
                  required aria-required="true" data-label="your city">
@@ -245,11 +245,6 @@
           <input type="text" id="f-state" name="State" autocomplete="address-level1" maxlength="20"
                  required aria-required="true" data-label="your state" value="DE">
           <span class="fielderr" id="e-state"></span>
-        </label>
-        <label class="field"><span>ZIP <b class="req" aria-hidden="true">*</b></span>
-          <input type="text" id="f-zip" name="ZIP" autocomplete="postal-code" inputmode="numeric"
-                 maxlength="10" required aria-required="true" data-label="your ZIP code">
-          <span class="fielderr" id="e-zip"></span>
         </label>
       </div>
     </fieldset>
@@ -270,7 +265,8 @@
         <h2>Areas of Interest <b class="req" aria-hidden="true">*</b></h2>
         <p class="h2note">Choose at least one.</p>
       </legend>
-      <div id="interests">
+      <div id="interests" role="group" aria-label="Areas of Interest, choose at least one"
+           aria-describedby="e-interest" aria-required="true">
         <label class="item"><input type="checkbox" name="Interest[]" value="Masonic History &amp; Research">
           <span class="name">Masonic History &amp; Research</span>
           <span class="desc">Researching the founders of Prince Hall Freemasonry in Delaware, our Grand
@@ -312,7 +308,7 @@
 
     <fieldset>
       <legend><h2>Certification</h2></legend>
-      <p class="cert">I certify that I am a Master Mason in good standing in a regular lodge of
+      <p class="cert" id="cert-text">I certify that I am a Master Mason in good standing in a regular lodge of
       Prince Hall Affiliation, and that the information given above is true and correct to the best
       of my knowledge. I hereby apply for membership in the John T. Luke, Grand Lecturer Emeritus
       Delaware Chapter of The Phylaxis Society. I support the Chapter&rsquo;s mission to preserve,
@@ -321,7 +317,7 @@
 
       <label class="item">
         <input type="checkbox" id="f-agree" name="Certification" value="Agreed"
-               required aria-required="true">
+               required aria-required="true" aria-describedby="cert-text e-agree">
         <span class="name">I certify the above, and I submit this application
           <b class="req" aria-hidden="true">*</b></span>
         <span class="desc">Check the box, then sign your name below.</span>
@@ -337,15 +333,31 @@
         </label>
         <label class="field"><span>Date
             <span class="hint">Filled in automatically.</span></span>
-          <input type="text" id="f-date" name="Date" readonly tabindex="-1">
+          <input type="text" id="f-date" name="Date" readonly>
         </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend><h2>What happens to what you write here</h2></legend>
+      <div class="banner" style="margin-top:0">
+        <b>Your information</b>
+        <span>This form sends one email to the Chapter Secretary and the Chapter President and is
+        held in their email accounts. There is no database and no spreadsheet. Nothing is sold,
+        shared, or published, and no payment is taken here. Your details are used only to present
+        your application to the Chapter for a vote and to contact you about it. If you are not
+        elected, your application is deleted within thirty days of the vote. If you are elected,
+        your name, Masonic title, lodge, and areas of interest may appear in Chapter records and in
+        the Digest. Your telephone number and email address are never published. You may ask us to
+        delete your application at any time by writing to the Chapter Secretary at
+        <a href="mailto:brodixonsaunders@stonesquare22pha.org">brodixonsaunders@stonesquare22pha.org</a>.</span>
       </div>
     </fieldset>
 
     <div class="actions">
       <button type="submit" class="btn" id="submitbtn">Submit Application</button>
     </div>
-    <span class="msg" id="msg" role="status" aria-live="assertive"></span>
+    <span class="msg" id="msg" role="alert"></span>
   </form>
 
   <footer class="reveal">
@@ -370,6 +382,7 @@
   var form = document.getElementById('apply');
   var msg  = document.getElementById('msg');
   var btn  = document.getElementById('submitbtn');
+  var submitted = false;
   var SECRETARY = 'brodixonsaunders@stonesquare22pha.org';
 
   // JavaScript is running, so take over validation and post into the hidden frame.
@@ -392,6 +405,9 @@
   document.getElementById('f-date').value = d.toLocaleDateString('en-US',
     { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
+  // When the page was opened. The backend rejects a form completed faster than a human can.
+  document.getElementById('f-t').value = String(Date.now());
+
   function clearErrors() {
     msg.className = 'msg'; msg.textContent = '';
     var errs = form.querySelectorAll('.fielderr');
@@ -400,23 +416,33 @@
     for (var j = 0; j < inv.length; j++) { inv[j].removeAttribute('aria-invalid'); }
   }
 
-  function failAt(el, errId, text) {
+  // invalidOn lets a group carry aria-invalid while focus still lands on a member of it,
+  // so a screen reader is never told a single checkbox is the thing in error.
+  function failAt(el, errId, text, invalidOn) {
     msg.className = 'msg err'; msg.textContent = text;
     var e = document.getElementById(errId);
     if (e) { e.textContent = text; e.className = 'fielderr on'; }
+    // Mark the group when there is one, otherwise the field itself. Never both.
+    (invalidOn || el || {}).setAttribute &&
+      (invalidOn || el).setAttribute('aria-invalid', 'true');
     if (el) {
-      el.setAttribute('aria-invalid', 'true');
-      try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); }
-      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      el.scrollIntoView({ block: 'center', behavior: reduceMotion() ? 'auto' : 'smooth' });
+      // Let the live region speak before the focus move preempts it.
+      setTimeout(function () {
+        try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); }
+      }, 120);
     }
     return false;
   }
 
   function validEmail(v) { return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(v); }
-  function validZip(v)   { return /^\d{5}(-\d{4})?$/.test(v); }
   function validPhone(v) { var d = v.replace(/\D/g, ''); return d.length === 10 || (d.length === 11 && d.charAt(0) === '1'); }
+  function reduceMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
 
   form.addEventListener('submit', function (e) {
+    if (submitted) { e.preventDefault(); return false; }
     clearErrors();
 
     var fields = form.querySelectorAll('[data-label]');
@@ -438,17 +464,14 @@
       e.preventDefault();
       return failAt(ph, 'e-phone', 'Please enter a ten digit telephone number.');
     }
-    var zp = document.getElementById('f-zip');
-    if (!validZip(zp.value.trim())) {
-      e.preventDefault();
-      return failAt(zp, 'e-zip', 'Please enter a five digit ZIP code.');
-    }
     var picked = form.querySelectorAll('input[name="Interest[]"]:checked').length;
     var other  = document.getElementById('f-other').value.trim();
     if (!picked && !other) {
       e.preventDefault();
       var firstBox = form.querySelector('input[name="Interest[]"]');
-      return failAt(firstBox, 'e-interest', 'Please choose at least one area of interest, or write one under Other.');
+      return failAt(firstBox, 'e-interest',
+        'Please choose at least one area of interest, or write one under Other.',
+        document.getElementById('interests'));
     }
     var agree = document.getElementById('f-agree');
     if (!agree.checked) {
@@ -458,10 +481,13 @@
 
     // Valid. Let the browser post the form and carry the applicant to the
     // Chapter's confirmation page, which only a real response can produce.
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
+    // aria-disabled rather than disabled, so focus is not thrown to the body
+    // at the exact moment the live region is trying to speak.
+    submitted = true;
+    btn.setAttribute('aria-disabled', 'true');
+    btn.textContent = 'Submitting';
     msg.className = 'msg';
-    msg.textContent = 'Sending your application…';
+    msg.textContent = 'Sending your application.';
   });
 })();
 </script>
